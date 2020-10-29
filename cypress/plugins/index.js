@@ -27,7 +27,7 @@ module.exports = (on, config) => {
 
   const dotenvConfig = require('dotenv').config()
 
-  if (dotenvConfig.error) {
+  if (dotenvConfig.error && dotenvConfig.error.code != 'ENOENT') {
     throw dotenvConfig.error;
   }
 
