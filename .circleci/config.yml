@@ -20,7 +20,7 @@ workflows:
       - cypress/install:
           context: org-global
           pre-steps:
-            - run: 'apt-get install -y ghostscript graphicsmagick'
+            - run: 'apt-get update && apt-get install -y ghostscript graphicsmagick'
             - run: 'mkdir cypress/screenshots'
           build: 'npm install'
       - cypress/run:
