@@ -21,12 +21,13 @@ workflows:
           context: org-global
           pre-steps:
             - checkout
-            - run: 'apt-get update && apt-get install -y ghostscript graphicsmagick'
             - run: 'mkdir ./cypress/screenshots'
           build: 'npm install'
       - cypress/run:
           context: org-global
           executor: simple-runner
+          pre-steps:
+            - run: 'apt-get update && apt-get install -y ghostscript graphicsmagick'
           browser: chrome
           requires:
             - cypress/install
