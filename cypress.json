@@ -3,6 +3,6 @@
   "viewportWidth": 1280,
   "viewportHeight": 960,
   "baseUrl": "https://greendale-verify.kuali.co/res",
-  "projectId": "nzunzk",
-  "reporter": "junit"
+  "reporter": "junit",
+  "projectId": "6re64c"
 }
