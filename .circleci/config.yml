@@ -1,0 +1,33 @@
+version: 2.1
+orbs:
+  cypress: cypress-io/cypress@1.26.0
+executors:
+  simple-runner:
+    docker:
+      - image: cypress/browsers:node12.6.0-chrome77
+    environment:
+      CYPRESS_BASE_URL: https://greendale-verify.kuali.co/res
+workflows:
+  daily_test:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - cypress/install:
+          context: org-global
+          pre-steps:
+            - run: 'apt-get install -y graphicsmagick'
+            - run: 'mkdir cypress/screenshots'
+          build: 'npm install'
+      - cypress/run:
+          context: org-global
+          executor: simple-runner
+          browser: chrome
+          requires:
+            - cypress/install
+          record: true
+          store_artifacts: true
