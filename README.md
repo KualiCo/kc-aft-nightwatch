@@ -1,33 +1,25 @@
-# KC Nightwatch AFTs
-These AFTs are run against a verify environment in our Jenkins and EBS pipelines.
+# KC AFTs
+These AFTs are run against a verify environment on circleCi.  Long term we can perform critical path smoke tests.
+Current tests include:
 
-## Running locally in standalone mode
-```
-NIGHTWATCH_BASE_URL=https://goblins-verify.kuali.co/res \
-SAMPLE_PDF=<path/to/pdf/file> \
-npm run test-local
-```
+- Creation of a subaward and verification of fdp forms
 
-## Running locally through Browserstack
+## Running locally
+You will need to create a .env file with the following:
 ```
-NIGHTWATCH_BASE_URL=https://goblins-verify.kuali.co/res \
-BROWSERSTACK_USERNAME=<user> \ 
-BROWSERSTACK_ACCESS_KEY=<key> \
-NODE_ENV=development \
-npm test
+AWS_PROFILE=saml-res
+PDF_SECRET=[shared service 2 service key running on target pdf service]
 ```
 
-## Running against a non-Core Auth environment
-```
-NIGHTWATCH_BASE_URL=https://res-tst1.kuali.co/kc-dev \
-USE_CORE_AUTH=false \
-npm run test-local
-```
+The profile chosen should be the one used when logging in to the aws cli via SAML2AWS.
+The secret is required because we call the pdf service to flatten returned pdfs
 
-## Running a specific test
+You will also need to install GraphicsMagick:
 ```
-npm run test-local -- --test tests/proposalDevelopment.js --testcase "PD test"
-```
-
-## GraphicsMagick installation on MacOS
 brew install gs graphicsmagick
+```
+
+Run locally by calling the following *after logging into the aws cli*:
+```
+npm run cy:open
+```
