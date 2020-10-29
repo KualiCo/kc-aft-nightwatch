@@ -32,3 +32,6 @@ workflows:
             - cypress/install
           record: true
           store_artifacts: true
+          post-steps:
+            - store_test_results:
+                path: cypress/results
