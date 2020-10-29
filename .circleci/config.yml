@@ -9,13 +9,13 @@ executors:
       CYPRESS_BASE_URL: https://greendale-verify.kuali.co/res
 workflows:
   daily_test:
-    # triggers:
-    #   - schedule:
-    #       cron: "0 0 * * *"
-    #       filters:
-    #         branches:
-    #           only:
-    #             - master
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
     jobs:
       - cypress/install:
           context: org-global

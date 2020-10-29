@@ -4,5 +4,9 @@
   "viewportHeight": 960,
   "baseUrl": "https://greendale-verify.kuali.co/res",
   "reporter": "junit",
+  "reporterOptions": {
+    "mochaFile": "cypress/results/test-results.xml",
+    "toConsole": true
+  },
   "projectId": "6re64c"
 }
