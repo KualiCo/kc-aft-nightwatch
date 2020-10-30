@@ -6,7 +6,7 @@ executors:
     docker:
       - image: cypress/browsers:node12.6.0-chrome77
     environment:
-      CYPRESS_BASE_URL: https://greendale-verify.kuali.co/res
+      CYPRESS_BASE_URL: https://greendale-verify.kuali.co/
 workflows:
   daily_test:
     triggers:

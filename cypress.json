@@ -2,7 +2,7 @@
   "nodeVersion": "system",
   "viewportWidth": 1280,
   "viewportHeight": 960,
-  "baseUrl": "https://greendale-verify.kuali.co/res",
+  "baseUrl": "https://greendale-verify.kuali.co/",
   "reporter": "junit",
   "reporterOptions": {
     "mochaFile": "cypress/results/test-results.xml",

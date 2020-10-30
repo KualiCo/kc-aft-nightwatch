@@ -22,6 +22,7 @@ context('Subaward FDP', () => {
       cy.task('deleteFile', getImagePath(FDP_BASELINE_PREFIX, i))
     }
 
+    cy.visit('/res')
     cy.login('quickstart', 'password')
   })
 
