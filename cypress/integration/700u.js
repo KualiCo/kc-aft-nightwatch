@@ -42,7 +42,7 @@ context('700U', () => {
 
     cy.get('button[data-test="next_disclosure_page"]').click()
 
-    cy.get('button:contains("Download unsigned form")').click()
+    cy.get('button:contains("Download unsigned form"):first').click()
 
     const s3Id = uuid()
     cy.fileExists(SEVEN_HUNDRED_U_PDF)
