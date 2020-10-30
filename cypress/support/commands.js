@@ -63,6 +63,10 @@ Cypress.Commands.add('getFromS3', (sourcePath, destinationPath) => {
   cy.task('getFromS3', { sourcePath, destinationPath })
 })
 
+Cypress.Commands.add('deleteFromS3', path => {
+  cy.task('deleteFromS3', path)
+})
+
 Cypress.Commands.add('fileExists', path => {
   cy.task('fileExists', path)
 })

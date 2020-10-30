@@ -12,7 +12,7 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 const fs = require('fs');
-const { saveToS3, getFromS3 } = require('../support/s3')
+const { saveToS3, getFromS3, deleteFromS3 } = require('../support/s3')
 const { flattenPdf } = require('../support/pdfService')
 const { checkFileExists, deleteFile } = require('../support/file')
 const { fromPath } = require('pdf2pic')
@@ -63,6 +63,9 @@ module.exports = (on, config) => {
     },
     getFromS3({ sourcePath, destinationPath }) {
       return getFromS3(sourcePath, destinationPath)
+    },
+    deleteFromS3(path) {
+      return deleteFromS3(path)
     },
     fileExists(path) {
       return checkFileExists(path)

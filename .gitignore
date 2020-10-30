@@ -43,3 +43,4 @@ browserstack.err
 tests_output
 
 cypress/integration/examples
+cypress/screenshots

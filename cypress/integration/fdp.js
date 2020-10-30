@@ -34,16 +34,21 @@ context('Subaward FDP', () => {
 
     cy.get('main iframe.uif-iFrame').iframe(() => {
       cy.get('input[name="document.documentHeader.documentDescription"]').type('Subaward FDP AFT')
+      cy.get('input[name="document.subAwardList[0].startDate"]').type('10/01/2020')
+      cy.get('input[name="document.subAwardList[0].endDate"]').type('09/30/2022')
       cy.get('select[name="document.subAwardList[0].subAwardTypeCode"]').select('1')
       cy.get('select[name="document.subAwardList[0].statusCode"]').select('1')
       cy.get('input[name="document.subAwardList[0].requisitionerUserName"]').type('cate')
+      cy.get('input[name="document.subAwardList[0].siteInvestigatorId"]').type('186')
       cy.get('input[name="document.subAwardList[0].organizationId"]').type('000002')
+      cy.get('input[name="document.subAwardList[0].fsrsSubawardNumber"]').type('11223344')
       cy.get('#tab-FundingSource-div .addline input[title^="Search"]').click()
       cy.awaitProcessing()
     })
 
     cy.get('main iframe.uif-iFrame').iframe(() => {
-      cy.get('#awardNumber').type('001820-00001')
+      cy.get('#awardNumber').type('012517-00001')
+      cy.get('#awardSequenceStatusBoth').check()
       cy.get('input[title^="search"]').click()
       cy.awaitProcessing()
     })
@@ -68,6 +73,25 @@ context('Subaward FDP', () => {
 
     cy.get('main iframe.uif-iFrame').iframe(() => {
       cy.get('#globalbuttons input[title="save"]').should('exist')
+      cy.get('input[value="Financial"]').click()
+      cy.awaitProcessing()
+    })
+
+    cy.get('main iframe.uif-iFrame').iframe(() => {
+      cy.get('input[name="methodToCall.addAmountReleased"]').should('exist')
+      cy.get('select[name="newSubAwardAmountInfo.modificationTypeCode"]').select('RESBOOT1001')
+      cy.get('input[name="newSubAwardAmountInfo.effectiveDate"]').type('10/01/2020')
+      cy.get('input[name="newSubAwardAmountInfo.obligatedChange"]').type('50000')
+      cy.get('input[name="newSubAwardAmountInfo.anticipatedChange"]').type('50000')
+      cy.get('input[name="newSubAwardAmountInfo.periodofPerformanceStartDate"]').type('10/01/2020')
+      cy.get('input[name="newSubAwardAmountInfo.periodofPerformanceEndDate"]').type('09/30/2021')
+      cy.get('input[name="methodToCall.addAmountInfo.anchorHistoryofChanges"]').click()
+      cy.awaitProcessing()
+    })
+    //financial -> add modification or increment
+
+    cy.get('main iframe.uif-iFrame').iframe(() => {
+      cy.get('#globalbuttons input[title="save"]').should('exist')
       cy.get('input[value="Template Information"]').click()
       cy.awaitProcessing()
     })
@@ -76,13 +100,15 @@ context('Subaward FDP', () => {
       cy.get('input[name="document.subAwardList[0].subAwardTemplateInfo[0].rAndD"]').check('true')
       cy.get('select[name="document.subAwardList[0].subAwardTemplateInfo[0].finalStatementDueCd"]').select('PPED')
       cy.get('input[name="document.subAwardList[0].subAwardTemplateInfo[0].includesCostSharing"]').check('false')
-      cy.get('select[name="document.subAwardList[0].subAwardTemplateInfo[0].invoiceOrPaymentContact"]').select('Prime Administrative Contact')
-      cy.get('select[name="document.subAwardList[0].subAwardTemplateInfo[0].finalStmtOfCostscontact"]').select('Prime Authorized Official')
-      cy.get('select[name="document.subAwardList[0].subAwardTemplateInfo[0].changeRequestsContact"]').select('Prime Financial Contact')
-      cy.get('select[name="document.subAwardList[0].subAwardTemplateInfo[0].terminationContact"]').select('Principal Investigator')
-      cy.get('select[name="document.subAwardList[0].subAwardTemplateInfo[0].noCostExtensionContact"]').select('Prime Administrative Contact')
-      cy.get('select[name="document.subAwardList[0].subAwardTemplateInfo[0].carryForwardRequestsSentTo"]').select('Prime Authorized Official')
-      cy.get('select[name="document.subAwardList[0].subAwardTemplateInfo[0].irbIacucContact"]').select('Prime Financial Contact')
+      cy.get('select[name="document.subAwardList[0].subAwardTemplateInfo[0].invoiceOrPaymentContact"]').select('34')
+      cy.get('select[name="document.subAwardList[0].subAwardTemplateInfo[0].finalStmtOfCostscontact"]').select('36')
+      cy.get('select[name="document.subAwardList[0].subAwardTemplateInfo[0].changeRequestsContact"]').select('35')
+      cy.get('select[name="document.subAwardList[0].subAwardTemplateInfo[0].terminationContact"]').select('-99')
+      cy.get('select[name="document.subAwardList[0].subAwardTemplateInfo[0].subChangeRequestsContact"]').select('31')
+      cy.get('select[name="document.subAwardList[0].subAwardTemplateInfo[0].subTerminationContact"]').select('33')
+      cy.get('select[name="document.subAwardList[0].subAwardTemplateInfo[0].noCostExtensionContact"]').select('34')
+      cy.get('select[name="document.subAwardList[0].subAwardTemplateInfo[0].carryForwardRequestsSentTo"]').select('36')
+      cy.get('select[name="document.subAwardList[0].subAwardTemplateInfo[0].irbIacucContact"]').select('35')
       cy.get('input[name="document.subAwardList[0].subAwardTemplateInfo[0].invoicesEmailed"]').check('true')
       cy.get('input[name="document.subAwardList[0].subAwardTemplateInfo[0].invoiceEmailDifferent"]').check('false')
       cy.get('input[name="document.subAwardList[0].subAwardTemplateInfo[0].applicableProgramRegulations"]').type('Program regulations text')
@@ -108,6 +134,7 @@ context('Subaward FDP', () => {
     cy.saveToS3(FDP_PDF, `test/fdp/${s3Id}`)
     cy.flattenPdf(`https://res-pdf-dev.s3-us-west-2.amazonaws.com/test/fdp/${s3Id}`, FDP_PDF_FLATTENED)
     cy.fileExists(FDP_PDF_FLATTENED)
+    cy.deleteFromS3(`test/fdp/${s3Id}`)
 
     cy.getFromS3(FDP_BASELINE_S3, FDP_BASELINE).then(hasBaseline => {
       if (hasBaseline) {
