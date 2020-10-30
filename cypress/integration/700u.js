@@ -21,7 +21,7 @@ context('700U', () => {
     cy.login('cate', 'password')
   })
 
-  it('can create a new subaward', () => {
+  it('can update disclosure and get 700U', () => {
     cy.get('button:contains("Update Disclosure")').click()
 
     cy.get('#HJwkHoIuN').type('{selectall}{backspace}1500 Kuali Ave.')
