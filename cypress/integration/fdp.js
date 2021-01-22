@@ -1,9 +1,9 @@
 import { v4 as uuid } from 'uuid'
 
-const FDP_BASELINE = '/tmp/baseline.pdf'
-const FDP_BASELINE_S3 = 'test/fdp/baseline.pdf'
-const FDP_PDF = '/tmp/FDP_CR_2019v2_-_FINAL.pdf'
-const FDP_PDF_FLATTENED = '/tmp/FDP_CR_2019v2_-_FINAL_flattened.pdf'
+const FDP_BASELINE = '/tmp/baseline_2020.pdf'
+const FDP_BASELINE_S3 = 'test/fdp/baseline_2020.pdf'
+const FDP_PDF = 'cypress/downloads/FDP_CR_2020.pdf'
+const FDP_PDF_FLATTENED = 'cypress/downloads/FDP_CR_2020_flattened.pdf'
 const FDP_IMAGES_OUTPUT_PATH = '/tmp/'
 const FDP_PREFIX = 'FDPv2'
 const FDP_BASELINE_PREFIX = 'Baseline-FDPv2'
@@ -125,7 +125,7 @@ context('Subaward FDP', () => {
     cy.get('main iframe.uif-iFrame').iframe(() => {
       cy.get('#tab-Print-imageToggle').click()
       cy.contains('Cost Reimbursement')
-      cy.get('select[name="subAwardPrintAgreement.selectedForms"]').select('RESBOOT19')
+      cy.get('select[name="subAwardPrintAgreement.selectedForms"]').select('RESBOOT20')
       cy.get('input[name="methodToCall.printTemplates"]').click()
     })
 
