@@ -4,8 +4,12 @@ const findMatching = path => {
   const pathParts = path.split('/')
   const filePattern = pathParts.pop()
   const dir = pathParts.join('/')
-  const files = fs.readdirSync(dir)
-  return files.filter(f => f.match(filePattern)).map(f => `${dir}/${f}`)
+  try {
+    const files = fs.readdirSync(dir)
+    return files.filter(f => f.match(filePattern)).map(f => `${dir}/${f}`)
+  } catch (e) {
+    return []
+  }
 }
 
 const checkFileExists = (path, timeLeft = 30000) => {
